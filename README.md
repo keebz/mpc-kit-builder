@@ -1,5 +1,8 @@
 # MPC Kit Builder
 
+> [!CAUTION]
+> **DISCLAIMER: NO WARRANTY.** This software is provided **"as is", without warranty of any kind**, express or implied. You use it entirely at your own risk. The author is not liable for any loss or damage, including lost or overwritten files, or kits that fail to load on your hardware. Back up your samples and your SD card before exporting to it. See the [disclaimer](#disclaimer).
+
 A Mac desktop app (Python + PySide6) for building sampler kits for Akai MPCs. Drop audio onto 16 pads across 4 banks, trim, normalize, pitch and lo-fi them, then export for:
 
 - **MPC2000XL**: `.PGM` program + `.SND` samples
@@ -8,12 +11,40 @@ A Mac desktop app (Python + PySide6) for building sampler kits for Akai MPCs. Dr
 
 It can also open existing `.PGM`, `.xpm` and `.mpcsample` kits for editing.
 
+![Main window](docs/images/main.png)
+
+> [!WARNING]
 > **Status:** the file formats come from community reverse-engineering and from one real `.mpcsample` kit. They are tested with round-trip unit tests, **not yet on hardware**. The `.xpm` writer is the least certain. Test a kit in VMPC2000XL or on your unit before trusting it.
 
-## Run
-- Quick: double-click `run.command` (first launch creates a virtualenv; needs Python 3.10+).
-- Or: `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt && .venv/bin/python app.py`
-- Standalone app: `./build_app.sh` -> `dist/MPC2000XL Kit Builder.app` (unsigned: right-click > Open the first time).
+New here? Read the **[Quickstart guide](docs/QUICKSTART.md)**.
+
+## Contents
+
+- [Install](#install)
+- [Quickstart](docs/QUICKSTART.md)
+- [Develop](#develop)
+- [Use](#use)
+- [Notes](#notes)
+- [Disclaimer](#disclaimer)
+- [License](#license)
+
+## Install
+
+**You need:** a Mac running a recent macOS and **Python 3.10 or newer** (`python3 --version` in Terminal; get it from [python.org](https://www.python.org/downloads/) or `brew install python`). The app is developed on macOS. The code and test suite also run on Linux; Windows is untested.
+
+1. Download the latest source zip from the [Releases page](https://github.com/keebz/mpc-kit-builder/releases/latest) (or `git clone https://github.com/keebz/mpc-kit-builder.git`) and unzip it.
+2. Double-click **`run.command`**. The first time, macOS may block it: right-click it, choose **Open**, then **Open** again. The first launch creates a private virtual environment and installs the dependencies, which takes a minute or two. Later launches are instant.
+3. Or from Terminal:
+   ```bash
+   cd mpc-kit-builder
+   python3 -m venv .venv
+   .venv/bin/pip install -r requirements.txt
+   .venv/bin/python app.py
+   ```
+
+**Standalone app (optional):** run `./build_app.sh` on a Mac to build `dist/MPC2000XL Kit Builder.app`. It is unsigned, so right-click > Open the first time. PyInstaller builds for the system it runs on, so this has to be done on a Mac.
+
+**Uninstall:** delete the folder. Nothing is installed outside it.
 
 ## Develop
 ```
@@ -23,6 +54,11 @@ pytest
 Tests run headless (`QT_QPA_PLATFORM=offscreen`). See `CLAUDE.md` for the code layout and format notes.
 
 ## Use
+
+For a step-by-step walkthrough see the [Quickstart guide](docs/QUICKSTART.md).
+
+![Pitch and lo-fi on a pad](docs/images/pitch-lofi.png)
+
 - **Open an existing kit:** **Open Kit…** reads an MPC2000XL `.PGM`, a modern MPC `.xpm` drum program, or an MPC Sample `.mpcsample` kit. Samples are loaded from the same folder as the kit file: `.PGM` kits use the `.SND` (or `.WAV`) with each sample's name, `.xpm` kits use the WAV each layer points to, and `.mpcsample` kits use the WAVs named `A01 - Name.wav` and so on. From a `.PGM`, the original pad settings (envelopes, filters, mixer, note assignments, program name) are kept and written back when you export. From a `.mpcsample`, the mute groups and tempo settings are kept for re-export. From an `.xpm`, only the samples, pad notes and sample start/end carry over; other program settings (tuning, envelopes, loops, mute groups) aren't kept, and only the first velocity layer of each pad is loaded. Keygroup `.xpm` programs aren't supported. 22.05 kHz SNDs are upsampled to 44.1 kHz for editing; use the lo-fi 22050 Hz option plus "write true sample rate" to shrink them again. Missing samples are listed and leave their pads empty. Two pads that shared one sample become independent copies. Banks E-H of a `.mpcsample` are skipped (the app has banks A-D).
 - **Load:** drag audio onto a pad (several files fill pads in order), or **Open Folder…** to fill empty pads across banks A-D (natural sort, 64 max). Everything is converted on import to 16-bit / 44.1 kHz.
 - **Play:** click a pad to select + play it. Space replays. Right-click a pad to delete it (you'll be asked to confirm). Control-click a pad to rename its sample.
@@ -47,5 +83,12 @@ Tests run headless (`QT_QPA_PLATFORM=offscreen`). See `CLAUDE.md` for the code l
 - SNDs are written one-shot (loop off). The MPC2000XL tends to loop imported WAVs, so load the SNDs (the .PGM looks for them by name).
 - The PGM layout comes from community reverse-engineering, not an official spec. Test a kit in the free VMPC2000XL emulator, then on hardware.
 
+## Disclaimer
+
+**This software is provided "AS IS", without warranty of any kind**, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non-infringement. You use it entirely at your own risk. The author is not liable for any damage, data loss or other claim arising from its use. The export formats are community reverse-engineered and have not been verified on hardware, so a kit may fail to load or load incorrectly.
+
+"MPC", "MPC2000XL" and "Akai Professional" are trademarks of inMusic Brands, Inc. MPC Kit Builder is an independent project and is not affiliated with, endorsed by or connected to Akai Professional or inMusic. It contains no Akai code or data.
+
 ## License
-MIT, see `LICENSE`.
+
+Source code: [MIT](LICENSE), © 2026 keebz.
