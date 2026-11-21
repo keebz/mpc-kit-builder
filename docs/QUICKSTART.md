@@ -7,7 +7,7 @@ This guide takes you from nothing to a kit on your MPC in about five minutes.
 
 ## 1. Install and start
 
-You need a Mac with Python 3.10 or newer. Download the latest source zip from the [Releases page](https://github.com/keebz/mpc-kit-builder/releases/latest), unzip it, and double-click **`run.command`** (first time: right-click > Open). Full details are in the [README](../README.md#install).
+Download the zip for your Mac (Apple Silicon or Intel) from the [Releases page](https://github.com/keebz/mpc-kit-builder/releases/latest), unzip it and drag **MPC2000XL Kit Builder** into Applications. The first time, macOS blocks it because it is not signed: open **System Settings > Privacy & Security** and click **Open Anyway**. Details, and how to run from source instead, are in the [README](../README.md#install).
 
 ## 2. Load your sounds
 

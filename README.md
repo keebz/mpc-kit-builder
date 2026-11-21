@@ -30,10 +30,27 @@ New here? Read the **[Quickstart guide](docs/QUICKSTART.md)**.
 
 ## Install
 
-**You need:** a Mac running a recent macOS and **Python 3.10 or newer** (`python3 --version` in Terminal; get it from [python.org](https://www.python.org/downloads/) or `brew install python`). The app is developed on macOS. The code and test suite also run on Linux; Windows is untested.
+### Download the app (recommended)
 
-1. Download the latest source zip from the [Releases page](https://github.com/keebz/mpc-kit-builder/releases/latest) (or `git clone https://github.com/keebz/mpc-kit-builder.git`) and unzip it.
-2. Double-click **`run.command`**. The first time, macOS may block it: right-click it, choose **Open**, then **Open** again. The first launch creates a private virtual environment and installs the dependencies, which takes a minute or two. Later launches are instant.
+Needs no Python. Get the zip for your Mac from the [latest release](https://github.com/keebz/mpc-kit-builder/releases/latest):
+
+- `MPC-Kit-Builder-<version>-macOS-arm64.zip` for Apple Silicon (M1 or newer)
+- `MPC-Kit-Builder-<version>-macOS-intel.zip` for Intel Macs
+
+Unzip it and drag **MPC2000XL Kit Builder** into Applications. **First launch:** the app is not signed or notarized by Apple, so macOS blocks it. Open **System Settings > Privacy & Security**, scroll down and click **Open Anyway** (older macOS: right-click the app > Open > Open). Or run once in Terminal:
+
+```bash
+xattr -dr com.apple.quarantine "/Applications/MPC2000XL Kit Builder.app"
+```
+
+To uninstall, drag the app to the Trash.
+
+### Run from source
+
+**You need** Python 3.10 or newer (`python3 --version`; get it from [python.org](https://www.python.org/downloads/) or `brew install python`). The app is developed on macOS. The code and test suite also run on Linux; Windows is untested.
+
+1. Download the source zip from the [Releases page](https://github.com/keebz/mpc-kit-builder/releases/latest) (or `git clone https://github.com/keebz/mpc-kit-builder.git`) and unzip it.
+2. Double-click **`run.command`** (first time: right-click > Open). The first launch creates a private virtual environment and installs the dependencies, which takes a minute or two.
 3. Or from Terminal:
    ```bash
    cd mpc-kit-builder
@@ -42,9 +59,9 @@ New here? Read the **[Quickstart guide](docs/QUICKSTART.md)**.
    .venv/bin/python app.py
    ```
 
-**Standalone app (optional):** run `./build_app.sh` on a Mac to build `dist/MPC2000XL Kit Builder.app`. It is unsigned, so right-click > Open the first time. PyInstaller builds for the system it runs on, so this has to be done on a Mac.
+### Build the app yourself
 
-**Uninstall:** delete the folder. Nothing is installed outside it.
+Run `./build_app.sh` on a Mac to build `dist/MPC2000XL Kit Builder.app`. Release builds are made automatically by GitHub Actions ([workflow](.github/workflows/build-mac.yml)) when a release is published. To attach a build to an existing release, run the workflow by hand from the Actions tab.
 
 ## Develop
 ```
