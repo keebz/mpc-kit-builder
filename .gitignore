@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Build output (build_app.sh / PyInstaller)
+build/
+dist/
+*.spec
+
+# macOS
+.DS_Store
+
+# Exported kits and test audio
+*.PGM
+*.pgm
+*.SND
+*.snd
+*.xpm
+*.mpcsample
