@@ -46,3 +46,6 @@ Tests run headless (`QT_QPA_PLATFORM=offscreen`). See `CLAUDE.md` for the code l
 - Pad A01 = MIDI note 35 ... pad D16 = note 98. Programs use default envelope/filter/mixer values.
 - SNDs are written one-shot (loop off). The MPC2000XL tends to loop imported WAVs, so load the SNDs (the .PGM looks for them by name).
 - The PGM layout comes from community reverse-engineering, not an official spec. Test a kit in the free VMPC2000XL emulator, then on hardware.
+
+## License
+MIT, see `LICENSE`.
